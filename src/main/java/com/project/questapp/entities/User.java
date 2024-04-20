@@ -13,4 +13,18 @@ public class User {
 
     String userName;
     String password;
+
+    public Object getUserName() {
+        return userName;
+    }
+
+    public Object getPassword() {
+        return password;
+    }
+
+    public void setUserName(Object userName) {
+    }
+
+    public void setPassword(Object password) {
+    }
 }

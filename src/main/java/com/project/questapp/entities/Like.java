@@ -6,7 +6,7 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table
+@Table(name="p_like")
 @Data
 
 public class Like {
