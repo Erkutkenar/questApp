@@ -2,8 +2,8 @@ package controllers;
 
 import com.project.questapp.entities.User;
 import com.project.questapp.repos.UserRepository;
-import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.web.bind.annotation.*;
+import services.UserService;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,44 +12,38 @@ import java.util.Optional;
 @RequestMapping("/users")
 public class UserController {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping
     public List<User> getAllUsers(){
-        return userRepository.findAll();
+
+        return userService.getAllUsers();
     }
 
     @PostMapping
     public User createUser(@RequestBody User newUser){
-        return userRepository.save(newUser);
+//        return userService.save(newUser); Business Logic için UserService'i yazınca bu alanları değiştirdik artık serivce ulaşıp ordan datayı alıyoruz.
+        return userService.saveOneUser(newUser);
     }
 
     @GetMapping("/{userId}")
     public User getOneUser(@PathVariable Long userId) {
-        return userRepository.findById(userId).orElse(null);
+        return userService.getOneUser(userId);
     }
 
     @PutMapping("/{userId}")
     public User updateOneUser(@PathVariable Long userId, @RequestBody User newUser) {
-        Optional<User> user = userRepository.findById(userId);
-        if(user.isPresent()) {
-            User foundUser = user.get();
-            foundUser.setUserName(newUser.getUserName());
-            foundUser.setPassword(newUser.getPassword());
-            userRepository.save(foundUser);
-            return foundUser;
-        } else {
-            return null;
-        }
+        return userService.updateOneUser(userId,newUser);
+
     }
 
     @DeleteMapping("/{userId}")
     public void deleteOneUser(@PathVariable Long userId) {
-        userRepository.deleteById(userId);
+        userService.deleteById(userId);
     }
 }
 
