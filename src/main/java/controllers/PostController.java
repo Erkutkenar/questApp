@@ -2,6 +2,7 @@ package controllers;
 
 import com.project.questapp.entities.Post;
 import com.project.questapp.requests.PostCreateRequest;
+import com.project.questapp.requests.PostUpdateRequest;
 import org.springframework.web.bind.annotation.*;
 import services.PostService;
 
@@ -31,5 +32,13 @@ public class PostController {
     @GetMapping("/{postId}")
     public Post getOnePost(@PathVariable Long postId) {
         return postService.getOnePostbyId(postId);
+    }
+    @PutMapping("/{postId}")
+    public Post updateOnePost(@PathVariable Long postId, @RequestBody PostUpdateRequest updatePost) {
+        return postService.updateOnePostById(postId,updatePost);
+    }
+    @DeleteMapping("/{postId}")
+    public void deleteOnePost(@PathVariable Long postId) {
+        postService.deleteOnePostById(postId);
     }
 }
