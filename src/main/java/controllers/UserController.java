@@ -1,18 +1,16 @@
 package controllers;
 
 import com.project.questapp.entities.User;
-import com.project.questapp.repos.UserRepository;
 import org.springframework.web.bind.annotation.*;
 import services.UserService;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
 public class UserController {
 
-    private final UserService userService;
+    private UserService userService;
 
     public UserController(UserService userService) {
         this.userService = userService;
